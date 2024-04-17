@@ -37,4 +37,8 @@ public class PokemonService {
                     return pokemonRepository.save(pokemonFound);
                 });
     }
+    public Mono<Void> deleteAll() {
+        return pokemonRepository.deleteAll();
+    }
+
 }
