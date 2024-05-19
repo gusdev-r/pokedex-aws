@@ -26,8 +26,8 @@ public class PokemonService {
         return pokemonRepository.findById(id)
                 .flatMap(pokemonFound -> {
                     pokemonFound.setName(pokemon.getName());
-                    pokemonFound.setName(pokemon.getCategory());
-                    pokemonFound.setName(pokemon.getSkills());
+                    pokemonFound.setCategory(pokemon.getCategory());
+                    pokemonFound.setSkills(pokemon.getSkills());
                     pokemonFound.setHealth(pokemon.getHealth());
                     return pokemonRepository.save(pokemonFound);
                 });
