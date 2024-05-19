@@ -1,19 +1,16 @@
 package com.academy.gusdev.pokedex.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.util.Objects;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class PokemonEvent {
 
     private Long eventId;
     private String eventType;
-
-    public PokemonEvent() {
-    }
-
-    public PokemonEvent(Long eventId, String eventType) {
-        this.eventId = eventId;
-        this.eventType = eventType;
-    }
 
     public Long getEventId() {
         return eventId;

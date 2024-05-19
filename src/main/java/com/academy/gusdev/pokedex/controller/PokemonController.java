@@ -4,6 +4,8 @@ import com.academy.gusdev.pokedex.domain.Pokemon;
 import com.academy.gusdev.pokedex.domain.PokemonEvent;
 import com.academy.gusdev.pokedex.repository.PokemonRepository;
 import com.academy.gusdev.pokedex.service.PokemonService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,38 +14,33 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
+@RequiredArgsConstructor
 @RestController
+@RequestMapping("api/v1/pokemons")
 public class PokemonController {
 
-    private PokemonService pokemonService;
-    private PokemonRepository pokemonRepository;
-
-    public PokemonController() {
-    }
-
-    public PokemonController(PokemonService pokemonService, PokemonRepository pokemonRepository) {
-        this.pokemonService = pokemonService;
-        this.pokemonRepository = pokemonRepository;
-    }
+    private final PokemonService pokemonService;
+    private final PokemonRepository pokemonRepository;
 
     @GetMapping
     public Flux<Pokemon> getAllPokemon() {
-        return pokemonService.getAllPokemon();
+        return pokemonService.findAllPokemons();
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public Mono<ResponseEntity<Pokemon>> getPokemonById(@PathVariable String id) {
-        return pokemonService.getPokemonById(id)
+        return pokemonService.findPokemonById(id)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Mono<Pokemon> savePokemon(@RequestBody Pokemon pokemon) {
         return pokemonService.savePokemon(pokemon);
     }
 
-    @PutMapping
+    @PutMapping("{id}")
     public Mono<ResponseEntity<Pokemon>> updatePokemon(@PathVariable (value = "id") String id,
                                                        @RequestBody Pokemon pokemon) {
         return pokemonService.updatePokemon(id, pokemon)

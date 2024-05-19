@@ -2,26 +2,21 @@ package com.academy.gusdev.pokedex.service;
 
 import com.academy.gusdev.pokedex.domain.Pokemon;
 import com.academy.gusdev.pokedex.repository.PokemonRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@RequiredArgsConstructor
 @Service
 public class PokemonService {
 
-    private PokemonRepository pokemonRepository;
+    private final PokemonRepository pokemonRepository;
 
-    public PokemonService() {
-    }
-
-    public PokemonService(PokemonRepository pokemonRepository) {
-        this.pokemonRepository = pokemonRepository;
-    }
-
-    public Flux<Pokemon> getAllPokemon() {
+    public Flux<Pokemon> findAllPokemons() {
         return pokemonRepository.findAll();
     }
-    public Mono<Pokemon> getPokemonById(String id) {
+    public Mono<Pokemon> findPokemonById(String id) {
         return pokemonRepository.findById(id);
     }
     public Mono<Pokemon> savePokemon(Pokemon pokemon) {

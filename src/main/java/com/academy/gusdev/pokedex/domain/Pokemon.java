@@ -1,10 +1,12 @@
 package com.academy.gusdev.pokedex.domain;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
 
+@AllArgsConstructor
 @Document
 public class Pokemon {
 
@@ -15,34 +17,14 @@ public class Pokemon {
     private String skills;
     private Double health;
 
-    public Pokemon(String id, String name, String category, String skills, Double health) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.skills = skills;
-        this.health = health;
-    }
 
-    public Pokemon() throws CloneNotSupportedException {
-        super.clone();
+    public Pokemon() {
+        super();
     }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pokemon pokemon = (Pokemon) o;
-        return Objects.equals(id, pokemon.id) && Objects.equals(name, pokemon.name) && Objects.equals(category, pokemon.category) && Objects.equals(skills, pokemon.skills) && Objects.equals(health, pokemon.health);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, category, skills, health);
     }
 
     public String getId() {
@@ -83,5 +65,29 @@ public class Pokemon {
 
     public void setHealth(Double health) {
         this.health = health;
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", skills='" + skills + '\'' +
+                ", health=" + health +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pokemon pokemon = (Pokemon) o;
+        return Objects.equals(id, pokemon.id) && Objects.equals(name, pokemon.name) && Objects.equals(category, pokemon.category) && Objects.equals(skills, pokemon.skills) && Objects.equals(health, pokemon.health);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, category, skills, health);
     }
 }
